@@ -82,7 +82,7 @@ Para facilitar o desenvolvimento, o projeto está configurado para rodar com Doc
 4.  **Verifique se a aplicação está no ar:**
     Abra um novo terminal e execute o seguinte comando `curl`:
     ```bash
-    curl http://localhost:5000/health
+    curl http://localhost:5001/health
     ```
     Você deve receber a seguinte resposta:
     ```json
@@ -99,7 +99,7 @@ Para facilitar o desenvolvimento, o projeto está configurado para rodar com Doc
 
 ### Endpoints da API
 
-Você pode usar o Postman ou `curl` para interagir com a API rodando localmente (`http://localhost:5000`) ou na sua instância EC2 (`http://<ip-publico-ec2>:5000`).
+Você pode usar o Postman ou `curl` para interagir com a API rodando localmente (`http://localhost:5001`) ou na sua instância EC2 (`http://<ip-publico-ec2>:5001`).
 
 | Método | Endpoint                    | Body (Exemplo)                           | Descrição                      |
 | :----- | :-------------------------- | :--------------------------------------- | :------------------------------- |
@@ -117,7 +117,7 @@ Abra seu terminal e utilize os comandos abaixo para interagir com a API.
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"name": "new-feature", "is_enabled": true}' \
-  http://localhost:5000/flags
+  http://localhost:5001/flags
 ```
 
 **Saída esperada:** 
@@ -129,7 +129,7 @@ curl -X POST \
 
 **2. Listar todas as flags:**
 ```bash
-curl -X GET http://localhost:5000/flags
+curl -X GET http://localhost:5001/flags
 ```
 
 **Saída esperada:** 
@@ -144,7 +144,7 @@ curl -X GET http://localhost:5000/flags
 
 **3. Consultar uma flag específica (`new-feature`):**
 ```bash
-curl -X GET http://localhost:5000/flags/new-feature
+curl -X GET http://localhost:5001/flags/new-feature
 ```
 
 **Saída esperada:** 
@@ -160,7 +160,7 @@ curl -X GET http://localhost:5000/flags/new-feature
 curl -X PUT \
   -H "Content-Type: application/json" \
   -d '{"is_enabled": false}' \
-  http://localhost:5000/flags/new-feature
+  http://localhost:5001/flags/new-feature
 ```
 
 **Saída esperada:** 
@@ -186,7 +186,7 @@ Sua missão é pegar esta aplicação monolítica e implantá-la na AWS. O ambie
 
 Este guia assume que você já criou uma instância EC2 e um banco de dados RDS, e que consegue se conectar à sua EC2 via SSH.
 
-> **Importante:** Lembre-se de configurar o **Security Group** da sua instância EC2 para permitir tráfego de entrada na porta `5000` (para a aplicação) e na porta `22` (para o SSH). O Security Group do RDS deve permitir tráfego na porta `5432` vindo do Security Group da sua EC2.
+> **Importante:** Lembre-se de configurar o **Security Group** da sua instância EC2 para permitir tráfego de entrada na porta `5001` (para a aplicação) e na porta `22` (para o SSH). O Security Group do RDS deve permitir tráfego na porta `5432` vindo do Security Group da sua EC2.
 
 Escolha a opção correspondente ao sistema operacional da sua instância EC2.
 
@@ -264,12 +264,12 @@ Após instalar as dependências, siga estes passos para configurar e rodar a apl
     Gunicorn é um servidor WSGI recomendado para produção. O comando `0.0.0.0` faz com que a aplicação escute em todas as interfaces de rede da EC2, tornando-a acessível publicamente.
 
     ```bash
-    gunicorn --bind 0.0.0.0:5000 app:app
+    gunicorn --bind 0.0.0.0:5001 app:app
     ```
 
 3.  **Verifique o acesso:**
-    A aplicação estará rodando. Agora você pode acessá-la usando o IP Público ou o DNS Público da sua instância EC2, seguido da porta `5000`.
-    Exemplo: `http://54.207.111.222:5000/health`
+    A aplicação estará rodando. Agora você pode acessá-la usando o IP Público ou o DNS Público da sua instância EC2, seguido da porta `5001`.
+    Exemplo: `http://54.207.111.222:5001/health`
 
 > **Nota:** O comando `gunicorn` acima executa a aplicação no *foreground*. Se você fechar sua sessão SSH, a aplicação irá parar. Em um ambiente de produção real, usaríamos um gerenciador de processos como `systemd` para rodar a aplicação como um serviço, mas para este desafio, rodar no foreground é suficiente.
 

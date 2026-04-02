@@ -1,0 +1,11 @@
+CLAUDE.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# Docker
+*.log
