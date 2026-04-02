@@ -2,7 +2,7 @@ services:
   app:
     build: .
     ports:
-      - "5000:5000"
+      - "5001:5001"
     volumes:
       - .:/app
     environment:
@@ -11,6 +11,7 @@ services:
       - DB_USER=user
       - DB_PASSWORD=password
       - DB_PORT=5432
+      - FLASK_APP=app.py
     depends_on:
       db:
         condition: service_healthy
